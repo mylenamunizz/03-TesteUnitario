@@ -1,3 +1,4 @@
+using Xunit;
 using Calculadora;
 
 namespace Calculadora.Tests;
