@@ -172,7 +172,7 @@ Isso torna os relatórios de teste autoexplicativos.
 3. Clique em **"Create codespace on main"**.
 4. Aguarde o ambiente ser carregado (2–3 minutos na primeira vez).
 
-> 💡 O Codespace já vem com o .NET SDK 8.0 e todas as extensões do VS Code pré-configuradas.
+> 💡 O Codespace já vem com o .NET SDK 10.0 e todas as extensões do VS Code pré-configuradas.
 
 ### Passo 3 — Verificar o ambiente
 
@@ -182,7 +182,7 @@ Abra o terminal integrado (`Ctrl + `` `) e execute:
 dotnet --version
 ```
 
-Deve exibir a versão 8.x. Em seguida, restaure os pacotes e compile:
+Deve exibir a versão 10.x. Em seguida, restaure os pacotes e compile:
 
 ```bash
 dotnet restore
