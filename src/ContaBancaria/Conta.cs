@@ -2,13 +2,6 @@ namespace ContaBancaria;
 
 /// <summary>
 /// Classe Conta Bancária — laboratório de Testes Unitários e TDD.
-/// 
-/// INSTRUÇÕES:
-///   1. Leia os requisitos de cada método (summary + regras).
-///   2. Escreva os testes PRIMEIRO no arquivo ContaTests.cs.
-///   3. Execute os testes e veja-os FALHAR (Red).
-///   4. Implemente o código mínimo para os testes PASSAREM (Green).
-///   5. Refatore se necessário (Refactor).
 /// </summary>
 public class Conta
 {
@@ -18,10 +11,6 @@ public class Conta
 
     /// <summary>
     /// Cria uma conta bancária.
-    /// Regras:
-    ///   - O titular não pode ser nulo ou vazio (lançar ArgumentException).
-    ///   - O saldo inicial não pode ser negativo (lançar ArgumentException).
-    ///   - A conta deve ser criada como ativa.
     /// </summary>
     public Conta(string titular, decimal saldoInicial = 0)
     {
@@ -37,55 +26,63 @@ public class Conta
 
     /// <summary>
     /// Deposita um valor na conta.
-    /// Regras:
-    ///   - Valor deve ser maior que zero (lançar ArgumentException).
-    ///   - Conta deve estar ativa (lançar InvalidOperationException).
-    ///   - O saldo deve ser atualizado corretamente.
     /// </summary>
     public void Depositar(decimal valor)
     {
-        // TODO: Implemente usando TDD
-        throw new NotImplementedException();
+        if (!Ativa)
+            throw new InvalidOperationException("Não é possível depositar em uma conta inativa.");
+
+        if (valor <= 0)
+            throw new ArgumentException("O valor do depósito deve ser maior que zero.", nameof(valor));
+
+        Saldo += valor;
     }
 
     /// <summary>
     /// Saca um valor da conta.
-    /// Regras:
-    ///   - Valor deve ser maior que zero (lançar ArgumentException).
-    ///   - Conta deve estar ativa (lançar InvalidOperationException).
-    ///   - Não pode sacar mais do que o saldo (lançar InvalidOperationException).
-    ///   - O saldo deve ser atualizado corretamente.
     /// </summary>
     public void Sacar(decimal valor)
     {
-        // TODO: Implemente usando TDD
-        throw new NotImplementedException();
+        if (!Ativa)
+            throw new InvalidOperationException("Não é possível sacar de uma conta inativa.");
+
+        if (valor <= 0)
+            throw new ArgumentException("O valor do saque deve ser maior que zero.", nameof(valor));
+
+        if (valor > Saldo)
+            throw new InvalidOperationException("Saldo insuficiente para realizar o saque.");
+
+        Saldo -= valor;
     }
 
     /// <summary>
     /// Transfere valor desta conta para outra.
-    /// Regras:
-    ///   - As duas contas devem estar ativas (lançar InvalidOperationException).
-    ///   - Valor deve ser maior que zero (lançar ArgumentException).
-    ///   - Saldo deve ser suficiente (lançar InvalidOperationException).
-    ///   - O saldo de ambas as contas deve ser atualizado corretamente.
     /// </summary>
     public void Transferir(Conta destino, decimal valor)
     {
-        // TODO: Implemente usando TDD
-        throw new NotImplementedException();
+        if (!Ativa)
+            throw new InvalidOperationException("A conta de origem está inativa.");
+
+        if (destino == null || !destino.Ativa)
+            throw new InvalidOperationException("A conta de destino é inválida ou está inativa.");
+
+        // Dica Ninja: Em vez de duplicar as validações de valor e saldo, 
+        // podemos simplesmente reutilizar os métodos Sacar e Depositar!
+        this.Sacar(valor);
+        destino.Depositar(valor);
     }
 
     /// <summary>
     /// Encerra a conta.
-    /// Regras:
-    ///   - A conta já deve estar ativa (lançar InvalidOperationException se já inativa).
-    ///   - O saldo deve ser zero para encerrar (lançar InvalidOperationException se houver saldo).
-    ///   - A propriedade Ativa deve ser alterada para false.
     /// </summary>
     public void Encerrar()
     {
-        // TODO: Implemente usando TDD
-        throw new NotImplementedException();
+        if (!Ativa)
+            throw new InvalidOperationException("A conta já está inativa.");
+
+        if (Saldo != 0)
+            throw new InvalidOperationException("A conta precisa ter saldo zero para ser encerrada.");
+
+        Ativa = false;
     }
 }
